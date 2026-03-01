@@ -1,0 +1,35 @@
+# Python
+*.pyc
+__pycache__/
+.Python
+env/
+venv/
+lib/
+lib64/
+include/
+bin/
+share/
+pip-wheel-metadata/
+*.egg-info/
+.tox/
+.coverage
+.mypy_cache/
+.pytest_cache/
+
+# Django-specific
+*.sqlite3
+local_settings.py  # Or any file containing sensitive data (e.g., SECRET_KEY, database passwords)
+mediafiles/        # Usually where user-uploaded media is stored. Can be large and should be handled separately.
+staticfiles/       # Often regenerated during deployment. Depends on specific deployment strategy.
+
+# IDE/Editor files
+.idea/             # JetBrains IDEs (PyCharm, etc.)
+.vscode/           # VS Code
+*.swp
+.DS_Store          # macOS files
+
+# OS and miscellaneous
+*.log
+*.tmp
+*.bak
+*.swo
