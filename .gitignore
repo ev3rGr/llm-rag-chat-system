@@ -4,6 +4,7 @@ __pycache__/
 .Python
 env/
 venv/
+.venv/
 lib/
 lib64/
 include/
