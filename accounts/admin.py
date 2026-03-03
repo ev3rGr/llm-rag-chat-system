@@ -1,3 +1,16 @@
-from django.contrib import admin
+from django.contrib import admin  
+from django.contrib.auth.admin import UserAdmin  
+from .models import User  
 
-# Register your models here.
+class CustomUserAdmin(UserAdmin):
+    fieldsets = UserAdmin.fieldsets + (
+        ("Custom Fields", {"fields": ("token",)}),
+    )
+
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        ("Custom Fields", {"fields": ("token",)}),
+    )
+
+    list_display = ("username", "email", "token", "is_staff")
+
+admin.site.register(User, CustomUserAdmin)
