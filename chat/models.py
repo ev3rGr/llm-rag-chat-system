@@ -11,7 +11,7 @@ class Conversation(models.Model):
     updated_at = models.DateTimeField("Updated at", auto_now=True)
 
     def __str__(self):
-        return self.user.username, self.title
+        return f"{self.user.username} - {self.title}"
     
 class Message(models.Model):
 
@@ -21,4 +21,4 @@ class Message(models.Model):
     content = models.TextField("Content")
 
     def __str__(self):
-        return self.conversation.id, self.content
+        return f"{self.role} - Conv {self.conversation.id}"
