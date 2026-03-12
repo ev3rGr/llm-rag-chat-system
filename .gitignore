@@ -34,3 +34,4 @@ staticfiles/       # Often regenerated during deployment. Depends on specific de
 *.tmp
 *.bak
 *.swo
+*:Zone.Identifier

@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     #Apps
     'accounts.apps.AccountsConfig',
     'chat.apps.ChatConfig',
-    'llm.apps.LlmConfig'
+    'llm.apps.LlmConfig',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -121,3 +122,11 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+SESSION_COOKIE_AGE = 3600
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
