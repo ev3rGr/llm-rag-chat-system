@@ -1,19 +1,68 @@
-const token = localStorage.getItem("access");
+async function refreshAccessToken() {
 
-if (!token) {
-    window.location.href = "/accounts/login/";
+    const refresh = localStorage.getItem("refresh");
+
+    if (!refresh) {
+        window.location.href = "/accounts/login/";
+        return null;
+    }
+
+    const response = await fetch("/api/token/refresh/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            refresh: refresh
+        })
+    });
+
+    if (!response.ok) {
+        window.location.href = "/accounts/login/";
+        return null;
+    }
+
+    const data = await response.json();
+
+    localStorage.setItem("access", data.access);
+
+    return data.access;
 }
-fetch("/", {
-    headers: {
-        "Authorization": "Bearer " + token
+
+async function loadChat() {
+
+    let token = localStorage.getItem("access");
+
+    if (!token) {
+        window.location.href = "/accounts/login/";
+        return;
     }
-}).then(res => {
-    if (res.redirected) {
-        window.location.href = '/accounts/login';
-    } else {
-        document.write(res.text());
+
+    let response = await fetch("/api/chat/", {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    });
+
+    if (response.status === 401) {
+
+        token = await refreshAccessToken();
+
+        if (!token) return;
+
+        response = await fetch("/api/chat/", {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
     }
-});
+
+    const data = await response.json();
+
+    document.body.innerHTML = data.message;
+}
+
+loadChat();
 
 // DOM Elements
 const chatMessages = document.getElementById('chatMessages');

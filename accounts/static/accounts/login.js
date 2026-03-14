@@ -95,7 +95,7 @@ class MinimalLoginForm {
         
         try {
             // API call
-            const response = await fetch("http://localhost:8000/accounts/api/token/", {
+            const response = await fetch("http://localhost:8000/api/token/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
