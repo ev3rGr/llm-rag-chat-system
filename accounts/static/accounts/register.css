@@ -17,12 +17,12 @@ body {
     line-height: 1.6;
 }
 
-.login-container {
+.register-container {
     width: 100%;
     max-width: 400px;
 }
 
-.login-card {
+.register-card {
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
@@ -31,23 +31,23 @@ body {
     transition: all 0.2s ease;
 }
 
-.login-card:hover {
+.register-card:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.login-header {
+.register-header {
     text-align: center;
     margin-bottom: 32px;
 }
 
-.login-header h2 {
+.register-header h2 {
     color: #1a202c;
     font-size: 1.75rem;
     font-weight: 600;
     margin-bottom: 8px;
 }
 
-.login-header p {
+.register-header p {
     color: #718096;
     font-size: 14px;
     font-weight: 400;
@@ -211,7 +211,7 @@ body {
 }
 
 /* Login Button */
-.login-btn {
+.register-btn {
     width: 100%;
     background: #3b82f6;
     border: none;
@@ -226,18 +226,18 @@ body {
     margin-bottom: 24px;
 }
 
-.login-btn:hover {
+.register-btn:hover {
     background: #2563eb;
     transform: translateY(-1px);
     box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
 }
 
-.login-btn:active {
+.register-btn:active {
     transform: translateY(0);
 }
 
 /* Loading State */
-.login-btn.loading {
+.register-btn.loading {
     pointer-events: none;
     background: #9ca3af;
 }
@@ -261,11 +261,11 @@ body {
     transition: opacity 0.2s ease;
 }
 
-.login-btn.loading .btn-text {
+.register-btn.loading .btn-text {
     opacity: 0;
 }
 
-.login-btn.loading .btn-loader {
+.register-btn.loading .btn-loader {
     opacity: 1;
 }
 
@@ -364,11 +364,11 @@ body {
         padding: 16px;
     }
     
-    .login-card {
+    .register-card {
         padding: 24px;
     }
     
-    .login-header h2 {
+    .register-header h2 {
         font-size: 1.5rem;
     }
     
