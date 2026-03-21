@@ -1,3 +1,16 @@
+// DOM Elements
+const chatMessages = document.getElementById('chatMessages');
+const messageInput = document.getElementById('messageInput');
+const sendBtn = document.getElementById('sendBtn');
+const clearChatBtn = document.getElementById('clearChat');
+const attachBtn = document.getElementById('attachBtn');
+const settingsBtn = document.getElementById('settingsBtn');
+const typingIndicator = document.getElementById('typingIndicator');
+const charCount = document.getElementById('charCount');
+
+// Initialize
+let messageHistory = [];
+
 async function loadChat() {
 
     let token = localStorage.getItem("access");
@@ -31,7 +44,7 @@ async function loadChat() {
 
     const data = await response.json();
 
-    document.body.innerHTML = data.message;
+    // document.body.innerHTML = data.message;
 }
 
 async function refreshAccessToken() {
@@ -66,19 +79,6 @@ async function refreshAccessToken() {
 }
 
 loadChat();
-
-// DOM Elements
-const chatMessages = document.getElementById('chatMessages');
-const messageInput = document.getElementById('messageInput');
-const sendBtn = document.getElementById('sendBtn');
-const clearChatBtn = document.getElementById('clearChat');
-const attachBtn = document.getElementById('attachBtn');
-const settingsBtn = document.getElementById('settingsBtn');
-const typingIndicator = document.getElementById('typingIndicator');
-const charCount = document.getElementById('charCount');
-
-// Initialize
-let messageHistory = [];
 
 // Auto-resize textarea
 messageInput.addEventListener('input', function() {
