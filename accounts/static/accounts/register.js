@@ -111,6 +111,12 @@ class MinimalLoginForm {
     }
     
     showError(field, message) {
+        if (field === "form") {
+            const errorElement = document.getElementById("formError");
+            errorElement.textContent = message;
+            errorElement.classList.add("show");
+            return;
+        }
         const formGroup = document.getElementById(field).closest('.form-group');
         const errorElement = document.getElementById(`${field}Error`);
         
@@ -125,9 +131,6 @@ class MinimalLoginForm {
         
         formGroup.classList.remove('error');
         errorElement.classList.remove('show');
-        setTimeout(() => {
-            errorElement.textContent = '';
-        }, 200);
     }
     
     async handleSubmit(e) {
@@ -143,47 +146,39 @@ class MinimalLoginForm {
         }
         
         this.setLoading(true);
-
-        console.log(this.emailInput.value)
-        console.log(this.usernameInput.value)
-        console.log(this.passwordInput.value)
-        console.log(this.confirmpasswordInput.value)
-        return 
         
-        // try {
-        //     // API call
-        //     const response = await fetch("/api/token/", {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json"
-        //         },
-        //         body: JSON.stringify({
-        //             username: this.emailInput.value,
-        //             password: this.passwordInput.value
-        //         })
-        //     });
+        try {
+            // API call
+            const response = await fetch("/accounts/register/api/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: this.usernameInput.value,
+                    email: this.emailInput.value,
+                    password: this.passwordInput.value
+                })
+            });
 
-        //     const data = await response.json();
+            let data = null;
+            const text = await response.text();
+            if (text) data = JSON.parse(text);
 
-        //     if (response.ok) {
+            if (response.ok) {
+                
+                this.login();
 
-        //         localStorage.setItem("access", data.access);
-        //         localStorage.setItem("refresh", data.refresh);
+            } else {
 
-        //         this.showSuccess();
-
-        //     } else {
-
-        //         this.showError("password", "Invalid credentials");
-        //     }
-            
-        //     // Show success state
-        //     this.showSuccess();
-        // } catch (error) {
-        //     this.showError('password', 'Login failed. Please try again.');
-        // } finally {
-        //     this.setLoading(false);
-        // }
+                this.showError("form", data.username[0]);
+            }
+        } catch (error) {
+            console.log(error)
+            this.showError('form', 'Login failed. Please try again.');
+        } finally {
+            this.setLoading(false);
+        }
     }
     
     setLoading(loading) {
@@ -192,14 +187,41 @@ class MinimalLoginForm {
     }
     
     showSuccess() {
-        // this.form.style.display = 'none';
-        // this.successMessage.classList.add('show');
-        window.location.href = '/accounts/login';
-        // // Simulate redirect after 2 seconds
-        // setTimeout(() => {
-        //     console.log('Redirecting to dashboard...');
-        //     window.location.href = '/dashboard';
-        // }, 2000);
+        window.location.href = '/';
+    }
+
+    async login() {
+        try {
+            // API call
+            const response = await fetch("http://localhost:8000/accounts/api/token/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: this.usernameInput.value,
+                    password: this.passwordInput.value
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+
+                localStorage.setItem("access", data.access);
+                localStorage.setItem("refresh", data.refresh);
+
+                this.showSuccess();
+
+            } else {
+
+                window.location.href = '/accounts/login/';
+            }
+
+        } catch(error) {
+            console.log(error)
+            window.location.href = '/accounts/login/';
+        }
     }
 }
 

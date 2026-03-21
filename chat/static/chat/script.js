@@ -1,34 +1,3 @@
-async function refreshAccessToken() {
-
-    const refresh = localStorage.getItem("refresh");
-
-    if (!refresh) {
-        window.location.href = "/accounts/login/";
-        return null;
-    }
-
-    const response = await fetch("/api/token/refresh/", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            refresh: refresh
-        })
-    });
-
-    if (!response.ok) {
-        window.location.href = "/accounts/login/";
-        return null;
-    }
-
-    const data = await response.json();
-
-    localStorage.setItem("access", data.access);
-
-    return data.access;
-}
-
 async function loadChat() {
 
     let token = localStorage.getItem("access");
@@ -48,7 +17,10 @@ async function loadChat() {
 
         token = await refreshAccessToken();
 
-        if (!token) return;
+        if (!token) {
+            window.location.href = "/accounts/login/";
+            return;
+        }
 
         response = await fetch("/api/chat/", {
             headers: {
@@ -60,6 +32,37 @@ async function loadChat() {
     const data = await response.json();
 
     document.body.innerHTML = data.message;
+}
+
+async function refreshAccessToken() {
+
+    const refresh = localStorage.getItem("refresh");
+
+    if (!refresh) {
+        window.location.href = "/accounts/login/";
+        return null;
+    }
+
+    const response = await fetch("/accounts/api/token/refresh/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            refresh: refresh
+        })
+    });
+
+    if (!response.ok) {
+        window.location.href = "/accounts/login/";
+        return null;
+    }
+
+    const data = await response.json();
+
+    localStorage.setItem("access", data.access);
+
+    return data.access;
 }
 
 loadChat();

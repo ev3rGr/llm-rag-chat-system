@@ -10,4 +10,5 @@ class ChatAPI(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        return Response({"message": "Hello"})
+        username = request.user
+        return Response({"message": f"Hello {username}"})
